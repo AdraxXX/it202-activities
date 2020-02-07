@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>activity_4.3</title>
 </head>
 
 <body>
+    <div class="card template" style="width: 18rem; display:none;">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      </div>
+    </div>
     <script>
         var url = "https://data.cityofchicago.org/resource/xzkq-xp2w.json"
-        fetch(url + "?$LIMIT=5")
+        fetch(url + "?$LIMIT=100")
         .then(response => {return response.json()})
         .then(json =>{for(let item of json){
-            let p = document.createElement('p');
-            p.textContent = item.name;
-            document.body.appendChild(p);
-        }})
+            let card = document.querySelectorAll('.template')[0].cloneNode(true);
+            card.classList = "card col-3";
+            card.style= "display = 'block';";
+            card.querySelector('.card-title').textContent = item.name;
+            card.querySelector('.card-subtitle').textContent = item.department;
+            card.querySelector('.card-text').textContent = ("$" + item.annual_salary);
+            document.body.appendChild(card);
+        }document.body.removeChild(document.body.querySelector('.template'));})
         .catch(error => alert(error))
         
     </script>
