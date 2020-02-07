@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="card template" style="width: 18rem; display:none;">
+    <div class="card template" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title">Card title</h5>
         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -21,8 +21,7 @@
         .then(response => {return response.json()})
         .then(json =>{for(let item of json){
             let card = document.querySelectorAll('.template')[0].cloneNode(true);
-            card.classList = "card col-3";
-            card.style= "display = 'block';";
+            card.classList = "card";
             card.querySelector('.card-title').textContent = item.name;
             card.querySelector('.card-subtitle').textContent = item.department;
             card.querySelector('.card-text').textContent = ("$" + item.annual_salary);
