@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>activity_4.3</title>
+</head>
+
+<body>
+    <script>
+        var url = "https://data.cityofchicago.org/resource/xzkq-xp2w.json"
+        fetch(url + "?$LIMIT=5")
+        .then(response => {return response.json()})
+        .then(json =>{for(let item of json){
+            let p = document.createElement('p');
+            p.textContent = item.name;
+            document.body.appendChild(p);
+        }})
+        .catch(error => alert(error))
+        
+    </script>
+</body>
+
+</html>
