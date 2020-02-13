@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>activity_4.3</title>
+</head>
+
+<body>
+    <script>
+        var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Chicago&api-key=vyBQYARfcykdm0ffRNr4I02zblrPdrKw"
+        fetch(url)
+        .then(response => {return response.json()})
+        .then(json =>{for(let item of json['response'].docs)
+            {
+                var newh1 =  document.createElement('h1');
+                newh1.textContent = item.headline.main;
+                document.body.appendChild(newh1);
+            }
+        })
+        .catch(error => alert(error))
+        
+    </script>
+</body>
+
+</html>
