@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Include dexie.js -->
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>activity_4.3</title>
+</head>
+
+<body>
+    <script>
+        let db = new Dexie("MyFriendDB");
+        db.version(1).stores({
+          friends: '++id,name,age'  
+        });
+        
+        db.friends.add(
+            {
+                name: "Dave",
+                age : 22,
+                homeTown: "Washington DC"
+            }
+        );
+        db.friends.where('age').equals(22).toArray()
+        .then(data => console.log(data));
+    </script>
+</body>
+
+</html>

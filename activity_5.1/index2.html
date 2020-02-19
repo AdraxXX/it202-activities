@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    
+    <h2>Input type="text"</h2>
+    <input id="make" type="text" value="BMW"></input>
+
+    <h2>Textarea</h2>
+    <textarea></textarea>
+
+    <h2>Input type="radio"</h2>
+    <input type="radio" name="rad1" value="A"/> A<br>
+    <input type="radio" name="rad1" value="B"/> B<br> 
+
+    <h2>Select</h2>
+    <select>
+      <option></option>
+      <option>C</option>
+      <option>D</option>
+      <option>E</option> 
+    </select>
+    <h2>Input type="checkbox"</h2>
+    <input type="checkbox" name="ck1" value="F"/> F<br>       
+    <input type="checkbox" name="ck1" value="G"/> G<br>       
+    <input type="checkbox" name="ck1" value="H"/> H<br>  
+    <button id="vehicleSearch">
+        Find towed vehicles
+    </button>
+  </head>
+  <body>
+    <script>
+      // endpoint variable
+      let apiEndpoint = "https://data.cityofchicago.org/resource/ygr5-vcbg.json";
+       
+      document.querySelector("#vehicleSearch")
+        .addEventListener("click", 
+            (event) =>{
+          let url = apiEndpoint + "?make=" + document.querySelector("#make").value;
+      
+          console.log(url);
+          fetch(url)
+          .then ( response => {return response.json()} )
+          .then ( (json) => {
+            for(var car of json)
+            {
+                console.log(car["plate"])
+            }
+          })
+          .catch(err => alert(err))
+      })
+      
+
+
+
+
+
+    </script>
+  </body>
+</html>
