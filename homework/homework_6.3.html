@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>homework_6.3</title>
+    <style>
+        canvas {
+            background: pink;
+            width:400px;
+            height:400px;
+        }​
+    </style>
+</head>
+
+<body>
+    <canvas>
+             This will be displayed if your browser doesn't
+             support the canvas element. The closing tag is
+             necessary.
+    </canvas>
+</body>
+<script>
+    let canvas = document.querySelector('canvas');
+    let canvasContent = canvas.getContext('2d');
+    function drawFirstLetter()
+    {
+        canvasContent.font = "30px Times New";
+        canvasContent.fillStyle = "red";
+        canvasContent.textAlign = "center";
+        canvasContent.fillText("D", canvas.width/2, canvas.height/2);
+    }
+    
+    function drawCircle()
+    {
+        canvasContent.beginPath();
+        canvasContent.arc(50, 50, 10, 0, 2 * Math.PI);
+        canvasContent.stroke();
+        canvasContent.fillStyle = "green";
+        canvasContent.fill();
+    }
+    
+    function drawUIN()
+    {
+        canvasContent.font = "30px Times New";
+        canvasContent.fillStyle = "black";
+        canvasContent.fillText("653591069", canvas.width/2, canvas.height - 5);
+    }
+    window.onload = function() {
+        drawFirstLetter();
+        drawCircle();
+        drawUIN();
+    }
+</script>
+</html>
