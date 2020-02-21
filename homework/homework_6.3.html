@@ -27,7 +27,13 @@
         canvasContent.font = "30px Times New";
         canvasContent.fillStyle = "red";
         canvasContent.textAlign = "center";
-        canvasContent.fillText("D", canvas.width/2, canvas.height/2);
+        //canvasContent.fillText("D", canvas.width/2, canvas.height/2);
+        canvasContent.beginPath();
+        canvasContent.moveTo(canvas.width/2, canvas.height/2);
+        canvasContent.lineTo(canvas.width/2, canvas.height/2 + 10);
+        canvasContent.arc(canvas.width/2, canvas.height/2, 10, 10, .65*Math.PI, false);// pupil (circle);
+        canvasContent.stroke();
+        canvasContent.closePath();
     }
     
     function drawCircle()
