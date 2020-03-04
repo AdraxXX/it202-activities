@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Activity_8.2</title>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 1000px;  /* The height is 400 pixels */
+            width: 100%;  /* The width is the width of the web page */
+        }
+    </style>
+  </head>
+    <body>
+        <h3>My Google Maps Demo</h3>
+        <!--The div element for the map -->
+        <div id="map"></div>
+        <script src="script.js"></script>
+        <script>
+            // Initialize and add the map
+            function initMap() {
+                let uluru = {lat: 41.75876735510478, lng: -87.57607814804392};
+                // The map, centered at Uluru
+                let map = new google.maps.Map(
+                  document.getElementById('map'), {zoom: 10, center: uluru});
+                console.log(inspection_data);
+                for(let marker of inspection_data)
+                {
+                    let lat = parseFloat(marker.latitude);
+                    let lon = parseFloat(marker.longitude);
+                    let name = marker.dba_name;
+                    let address = marker.address;
+                    let facility = marker.facility_type;
+                    let inspectionDate = (marker.inspection_date).split("T")[0];
+                    let results = marker.results;
+                    // The location of Uluru
+                    let uluruMarker = {lat: lat, lng: lon};
+                    //The marker, positioned at Uluru
+                    let newmarker = new google.maps.Marker({position: uluruMarker, map: map, title: name});
+                    var contentString =  '<div id="content">'+
+                          '<div id="siteNotice">'+
+                          '</div>'+
+                          '<h1 id="firstHeading" class="firstHeading">' + name + '</h1>'+
+                          '<div id="bodyContent">'+
+                          '<h2>' + facility + '</h2>'+
+                          '<h3>' + address + '<h3>' + 
+                          '<h4>' + inspectionDate + ': ' + results + '<h4>' +
+                          '</div>'+
+                          '</div>';
+
+                    var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                    });
+                    
+                    newmarker.addListener('click', function() {
+                        infowindow.open(map, newmarker);
+                    });
+                }
+            }
+        </script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0436jhehbysf2RU8bhfGqON-lrRj3tNQ&callback=initMap">
+        </script>
+    </body>
+</html>

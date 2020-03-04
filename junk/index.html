@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player</title>
+    <style>
+        canvas {
+            background: black;
+            width:400px;
+            height:400px;
+        }​
+    </style>
+</head>
+
+<body>
+    <canvas>
+             This will be displayed if your browser doesn't
+             support the canvas element. The closing tag is
+             necessary.
+    </canvas>
+</body>
+<script>
+    let canvas = document.querySelector('canvas');
+    let canvas2DContent = canvas.getContext('2d');
+    
+    let player = {x:100, y:100, radius:10, color:"white", speed:5};
+    let player2 = {x:10, y:10, radius:10, color:"red", speedy:1, speedx:1};
+    document.addEventListener("keydown", (e) =>
+    {
+        console.log(e);
+        switch (e.code) {
+            case "KeyA":
+                player["x"] -= player["speed"];
+                break;
+            case "KeyS":
+                player["y"] += player["speed"];
+                break;
+            case "KeyD":
+                player["x"] += player["speed"];
+                break;
+            case "KeyW":
+                player["y"] -= player["speed"];
+                break;
+        }
+    });
+    document.addEventListener("mousedown", (e) =>
+    {
+        if(e.detail > 1)
+            console.log(e);
+    }) 
+//     document.addEventListener("mouseup", (e) =>
+//     {
+//         console.log(e);
+//     }) 
+    const draw = () =>
+    {
+        let game = window.requestAnimationFrame(draw);
+        // clear
+        canvas2DContent.clearRect(0,0,canvas.width,canvas.height);
+        
+        // update player location
+        player2["y"] += player2["speedy"];
+        if((player2["y"] > canvas.height - player2["radius"]) || (player2["y"] < 0 + player2["radius"]))
+            player2["speedy"] = -player2["speedy"];
+        
+        player2["x"] += player2["speedx"];
+        if((player2["x"] > canvas.width - player2["radius"]) || (player2["x"] < 0 + player2["radius"]))
+            player2["speedx"] = -player2["speedx"];
+        
+        if(player["y"] > canvas.height + player["radius"])
+            player["y"] = -player["radius"];
+        if(player["x"] > canvas.width + player["radius"])
+            player["x"] = -player["radius"];
+        if(player["y"] < -player["radius"])
+            player["y"] = canvas.height + player["radius"];
+        if(player["x"] < -player["radius"])
+            player["x"] = canvas.width + player["radius"];
+        
+        if(Math.sqrt(Math.pow((player2["x"] -  player["x"]), 2) + Math.pow((player2["y"] -  player["y"]), 2)) < (player["radius"] + player2["radius"]))
+        {
+            player["x"] -= 1;
+            player["speed"] -= 1;
+            if(player["speed"] <= 0)
+            {
+               window.cancelAnimationFrame(game);
+               let newButton = document.createElement("Button");
+               newButton.textContent = "Reload";
+               document.body.appendChild(newButton);
+               document.querySelector('Button').addEventListener('click', ()=>{
+                   location.reload();
+               })
+            }
+        }
+        //draw
+        canvas2DContent.beginPath();
+        canvas2DContent.arc(player["x"], player["y"], player["radius"], 0, 2 * Math.PI);
+        canvas2DContent.fillStyle = player["color"];
+        canvas2DContent.fill();
+        canvas2DContent.closePath();
+        
+        canvas2DContent.beginPath();
+        canvas2DContent.arc(player2["x"], player2["y"], player2["radius"], 0, 2 * Math.PI);
+        canvas2DContent.fillStyle = player2["color"];
+        canvas2DContent.fill();
+        canvas2DContent.closePath();
+    }
+    draw();
+</script>
+</html>
