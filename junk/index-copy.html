@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>In Class 03/30</title>
+  <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <style>
+    :root {
+      --mdc-theme-primary: navy;
+    }
+
+    body {margin: 0;}
+    main {width: 100%;
+          }
+    .view
+    {
+      display: none;
+    }
+      
+    .template
+     {
+        display:none;
+     }
+      
+     #data
+      {
+          max-height: 400px;
+          width: 100%;
+          margin: auto;
+          overflow-y: scroll;
+      }
+  </style>
+
+  </head>
+  <body>  
+  <main class="mdc-top-app-bar--fixed-adjust">
+    <button class="mdc-button foo-button mdc-button--raised" id="GRAF">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Graffiti Removal Request</span>
+    </button>
+     <button class="mdc-button foo-button mdc-button--raised" id="SFD">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Street Light Out Complaint</span>
+    </button>
+     <button class="mdc-button foo-button mdc-button--raised" id="CSF">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Consumer Fraud Complaint</span>
+    </button>
+    <div id="data">
+        <ul class="mdc-list mdc-list--two-line">
+        </ul>
+    </div>
+    <div role="alertdialog" aria-modal="true" class="mdc-dialog mdc-dialog--closed" data-is-opened="true" data-is-stacked="false" aria-labelledby="goog_2122103131-alert-title" aria-describedby="goog_2122103131-alert-supporting">
+
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          
+      <h2 class="mdc-dialog__title" id="goog_2122103131-alert-title"><!---->Alert<!----></h2>
+      
+    <div class="mdc-dialog__content" id="goog_2122103131-alert-supporting">
+      You are opening a new search.
+    </div>
+  
+      
+      
+    <footer class="mdc-dialog__actions">
+      <!---->
+        <button type="button" class="mdc-button mdc-dialog__button mdc-ripple-upgraded" data-mdc-dialog-action="1">
+          <span class="mdc-button__label"><!---->Close<!----></span>
+          <div class="mdc-button__ripple"></div>
+        </button>
+      <!---->
+    </footer>
+  
+    
+        </div>
+      </div>
+
+      <div class="mdc-dialog__scrim"></div>
+    </div>
+  </main>
+
+
+  <script>
+    mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+    document.querySelectorAll('footer button').forEach(item => {
+        item.addEventListener('click', event => 
+            {
+            document.querySelector('.mdc-dialog').classList = "mdc-dialog mdc-dialog--closed";
+        })
+    });
+      
+    document.querySelectorAll('.mdc-button--raised').forEach(item => {
+        item.addEventListener('click', event => 
+            {
+                  let apiEndpoint = "https://data.cityofchicago.org/resource/v6vf-nfxy.json" + "?sr_short_code=" + item.id;
+
+                  document.querySelector('.mdc-dialog').classList = "mdc-dialog mdc-dialog--open";
+                  console.log(apiEndpoint);
+                  fetch(apiEndpoint)
+                  .then ( response => {return response.json()} )
+                  .then ( (json) => {
+                      console.log(item.id);
+                      
+                      let list = document.querySelector(".mdc-list");
+                      let currentTabIndex = 0;
+                      let child = list.lastElementChild;
+                      while(child != null)
+                      {
+                          list.removeChild(child);
+                          child = list.lastElementChild;
+                      }
+                      
+                      for(let data of json)
+                      {
+                          let newItem = document.createElement("li");
+                          newItem.classList = "mdc-list-item mdc-ripple-upgraded";
+                          newItem.tabindex = currentTabIndex++;
+                          
+                          let newContainer = document.createElement("span");
+                          newContainer.classList = "mdc-list-item__text"
+                          
+                          
+                          let newIcon = document.createElement("span");
+                          newIcon.classList = "mdc-list-item__primary-text material-icons";
+                          
+                          if(item.id == 'GRAF')
+                              newIcon.textContent = 'texture';
+                          if(item.id == 'SFD')
+                              newIcon.textContent = 'wb_incandescent';
+                          if(item.id == 'CSF')
+                              newIcon.textContent = 'priority_high';
+                          
+                          let newText = document.createElement("span");
+                          newText.classList = "mdc-list-item__secondary-text";
+                          newText.textContent = data.street_address + ": " + data.status;
+                          
+                          newContainer.appendChild(newIcon);
+                          newContainer.appendChild(newText);
+                          newItem.appendChild(newContainer);
+                          
+                          list.appendChild(newItem);
+                      }
+                  })
+                  .catch(err => alert(err))
+            })
+    })
+    </script>
+  </body>
+</html>
