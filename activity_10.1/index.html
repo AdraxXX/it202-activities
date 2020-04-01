@@ -59,12 +59,11 @@
   <script>
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
     const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
-    document.querySelectorAll('footer button').forEach(item => {
-        item.addEventListener('click', event => 
-            {
-                dialog.close();
-        })
-    });
+      
+    dialog.listen('MDCDialog:closing', (e) =>
+                 {
+               console.log(e.detail.action);
+    })
       
     document.querySelectorAll('.mdc-button--raised').forEach(item => {
         item.addEventListener('click', event => 
