@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Activity 10.1</title>
+  <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <style>
+    :root {
+      --mdc-theme-primary: navy;
+    }
+
+    body {margin: 0;}
+    main {width: 100%;
+          }
+    .view
+    {
+      display: none;
+    }
+      
+    .template
+     {
+        display:none;
+     }
+      
+     #data
+      {
+          max-height: 400px;
+          width: 100%;
+          margin: auto;
+          overflow-y: scroll;
+      }
+  </style>
+
+  </head>
+  <body>  
+  <main class="mdc-top-app-bar--fixed-adjust">
+    <button class="mdc-button foo-button mdc-button--raised" id="GRAF">
+    <div class="mdc-button__ripple"></div>
+    <span class="mdc-button__label">Open Dialog</span>
+    </button>
+    <div role="alertdialog" aria-modal="true" class="mdc-dialog mdc-dialog--closed" data-is-opened="true" data-is-stacked="false" aria-labelledby="goog_2122103131-alert-title" aria-describedby="goog_2122103131-alert-supporting">
+
+      <div class="mdc-dialog__container">
+        <div class="mdc-dialog__surface">
+          
+      <h2 class="mdc-dialog__title" id="goog_2122103131-alert-title"><!---->Alert<!----></h2>
+      
+    <div class="mdc-dialog__content" id="goog_2122103131-alert-supporting">
+      This is dialog say what you will here.
+    </div>
+  
+      
+      
+    <footer class="mdc-dialog__actions">
+      <!---->
+        <button type="button" class="mdc-button mdc-dialog__button mdc-ripple-upgraded" data-mdc-dialog-action="1">
+          <span class="mdc-button__label"><!---->Close<!----></span>
+          <div class="mdc-button__ripple"></div>
+        </button>
+      <!---->
+    </footer>
+  
+    
+        </div>
+      </div>
+
+      <div class="mdc-dialog__scrim"></div>
+    </div>
+  </main>
+
+
+  <script>
+    mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+    document.querySelectorAll('footer button').forEach(item => {
+        item.addEventListener('click', event => 
+            {
+            document.querySelector('.mdc-dialog').classList = "mdc-dialog mdc-dialog--closed";
+        })
+    });
+      
+    document.querySelectorAll('.mdc-button--raised').forEach(item => {
+        item.addEventListener('click', event => 
+            {
+                  document.querySelector('.mdc-dialog').classList = "mdc-dialog mdc-dialog--open";
+            })
+    })
+    </script>
+  </body>
+</html>
