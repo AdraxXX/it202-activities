@@ -25,32 +25,32 @@
     <div class="mdc-button__ripple"></div>
     <span class="mdc-button__label">Open Dialog</span>
     </button>
-    <div role="alertdialog" aria-modal="true" class="mdc-dialog mdc-dialog--closed" data-is-opened="true" data-is-stacked="false" aria-labelledby="goog_2122103131-alert-title" aria-describedby="goog_2122103131-alert-supporting">
-
+    <div class="mdc-dialog">
       <div class="mdc-dialog__container">
-        <div class="mdc-dialog__surface">
-          
-      <h2 class="mdc-dialog__title" id="goog_2122103131-alert-title"><!---->Alert<!----></h2>
-      
-    <div class="mdc-dialog__content" id="goog_2122103131-alert-supporting">
-      This is dialog say what you will here.
-    </div>
-  
-      
-      
-    <footer class="mdc-dialog__actions">
-      <!---->
-        <button type="button" class="mdc-button mdc-dialog__button mdc-ripple-upgraded" data-mdc-dialog-action="1">
-          <span class="mdc-button__label"><!---->Close<!----></span>
-          <div class="mdc-button__ripple"></div>
-        </button>
-      <!---->
-    </footer>
-  
-    
+        <div class="mdc-dialog__surface"
+          role="alertdialog"
+          aria-modal="true"
+          aria-labelledby="my-dialog-title"
+          aria-describedby="my-dialog-content">
+          <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+          <h2 class="mdc-dialog__title" id="my-dialog-title"><!--
+         -->Alert<!--
+       --></h2>
+          <div class="mdc-dialog__content" id="my-dialog-content">
+            Dialog body text goes here.
+          </div>
+          <footer class="mdc-dialog__actions">
+            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+              <div class="mdc-button__ripple"></div>
+              <span class="mdc-button__label">No</span>
+            </button>
+            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="yes">
+              <div class="mdc-button__ripple"></div>
+              <span class="mdc-button__label">Yes</span>
+            </button>
+          </footer>
         </div>
       </div>
-
       <div class="mdc-dialog__scrim"></div>
     </div>
   </main>
@@ -58,17 +58,18 @@
 
   <script>
     mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+    const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
     document.querySelectorAll('footer button').forEach(item => {
         item.addEventListener('click', event => 
             {
-            document.querySelector('.mdc-dialog').classList = "mdc-dialog mdc-dialog--closed";
+                dialog.close();
         })
     });
       
     document.querySelectorAll('.mdc-button--raised').forEach(item => {
         item.addEventListener('click', event => 
             {
-                  document.querySelector('.mdc-dialog').classList = "mdc-dialog mdc-dialog--open";
+                  dialog.open();
             })
     })
     </script>
